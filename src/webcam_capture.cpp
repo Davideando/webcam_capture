@@ -16,6 +16,13 @@ int main(int argc, char *argv[])
 	
 	//pixel value (4-element vector)
 	cv::Scalar_<unsigned char> px_value;
+
+	//New color value (4-element vector)
+	cv::Scalar_<unsigned char> modValue;
+	modValue[0] = 0;
+	modValue[1] = 0;
+	modValue[2] = 255;
+	modValue[3] = 0;
 	
 	//check user args
 	switch(argc)
@@ -51,6 +58,21 @@ int main(int argc, char *argv[])
             std::cout << "No frame" << std::endl;
             cv::waitKey();
         }
+
+	// Recorro todos los 8 pixeles adyacentes al punto central y los pongo a rojo
+	
+	int valueCols = image.cols/2 - 10;
+	int valueRows = image.rows/2 - 10;
+	
+	px_value = image.at<cv::Scalar_<unsigned char> >(image.rows/2, image.cols/2, 0);
+
+	for(int i = valueRows; i <= valueRows + 20; i++)
+	{
+		for(int j = valueCols; j <= valueCols + 20; j++)
+		{
+			image.at<cv::Scalar_<unsigned char> >(i,j,0) = modValue;
+		}
+	}
         
         //show image in a window
         cv::imshow("Output Window", image);
@@ -58,8 +80,7 @@ int main(int argc, char *argv[])
 		//print image dimensions
 		std::cout << "image size is: " << image.rows << "x" << image.cols << std::endl; 
 		std::cout << "image depth: " << image.depth() << std::endl; 
-		std::cout << "num channels: " << image.channels() << std::endl; 
-		px_value = image.at<cv::Scalar_<unsigned char> >(image.rows/2, image.cols/2, 0); 
+		std::cout << "num channels: " << image.channels() << std::endl;  
 		std::cout << "central pixel value (BGR): " << (int)px_value[0] << "," << (int)px_value[1] << "," << (int)px_value[2] << std::endl; 
 		
 		//Waits 1 millisecond to check if a key has been pressed. If so, breaks the loop. Otherwise continues.
