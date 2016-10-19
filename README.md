@@ -35,4 +35,6 @@ Pasos para ejecutar el fichero:
 
 	./webcam_capture
 
+Añadido también el código modificado del Ejercicio 1.4 de Percepción
+
 	

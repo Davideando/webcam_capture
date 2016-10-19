@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	//pixel value (4-element vector)
 	cv::Scalar_<unsigned char> px_value;
 
-	//New color value (4-element vector)
+	//Color para cambiar los diferentes pixeles adyacentes al centro (4-element vector)
 	cv::Scalar_<unsigned char> modValue;
 	modValue[0] = 0;
 	modValue[1] = 0;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
             cv::waitKey();
         }
 
-	// Recorro todos los 8 pixeles adyacentes al punto central y los pongo a rojo
+	// Se recorren las 20 columnas y filas adyacentes al punto central
 	
 	int valueCols = image.cols/2 - 10;
 	int valueRows = image.rows/2 - 10;
@@ -70,7 +70,11 @@ int main(int argc, char *argv[])
 	{
 		for(int j = valueCols; j <= valueCols + 20; j++)
 		{
-			image.at<cv::Scalar_<unsigned char> >(i,j,0) = modValue;
+			// Se mantiene el punto central sin cambiar.
+			if(!(j == valueCols + 10 && i == valueRows + 10))
+			{
+				image.at<cv::Scalar_<unsigned char> >(i,j,0) = modValue;
+			}
 		}
 	}
         
